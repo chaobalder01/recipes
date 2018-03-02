@@ -1,0 +1,49 @@
+/* cau 1*/
+create database My_classicmodels;
+use My_classicmodels;
+create table productlines(
+productLine VARCHAR(50) NOT NULL primary key,
+textDescription VARCHAR(4000) ,
+htmlDescription MEDIUMTEXT ,
+image MEDIUMBLOB 
+);
+describe productLines;
+create table products(
+productCode VARCHAR(15) NOT NULL primary KEY,
+productName VARCHAR(70) NOT NULL,
+productLine VARCHAR(50) NOT NULL,
+productScale VARCHAR(10) NOT NULL,
+productVendor VARCHAR(50) NOT NULL,
+productDescription TEXT NOT NULL,
+quantyInStock SMALLINT(6) NOT NULL,
+butPrice DOUBLE NOT NULL
+);
+describe products;
+create table orderdetails(
+orderNumber INT(11) not null,
+productCode VARCHAR(15) not null,
+quantityOrdered INT(11) not null,
+princeEach DOUBLE not null,
+orderLineNumber SMALLINT(6) not null,
+primary key (orderNumber,productCode)
+);
+describe orderdetails;
+create table orders(
+orderNumber INT(11) NOT NULL primary key,
+orderDate DATETIME NOT NULL ,
+requiredDate DATETIME NOT NULL,
+shippedDate DATETIME ,
+status varchar(15) not null,
+comments text ,
+customerNumber INT(11) NOT NULL
+);
+describe orders;
+
+/* cau 2*/
+alter table products add constraint fk_productline foreign key(productLine) references productlines(productLine) on update cascade;
+alter table orderdetails add constraint fk_productcode foreign key(productCode) references products(productCode) on update cascade;
+alter table orderdetails add constraint fk_ordernumber foreign key(orderNumber) references orders(orderNumber) on update cascade;
+
+
+
+
